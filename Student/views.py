@@ -59,7 +59,7 @@ def student_dashboard(request):
 # Lecturer Dashboard View
 def lecturer_dashboard(request):
     lecturer = request.user.lecturer  # Corrected related_name
-    courses = request.user.courses.all()
+    courses = lecturer.courses.all()
     context = {
         'lecturer': lecturer,
         'courses' : courses
