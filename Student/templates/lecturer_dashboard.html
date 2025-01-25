@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecturer Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .dashboard-container {
+            background-color: #ffffff;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .student-details {
+            margin: 1rem 0;
+            font-size: 1rem;
+            color: #555;
+        }
+        .detail-item {
+            margin: 0.5rem 0;
+        }
+        .detail-item span {
+            font-weight: bold;
+            color: #333;
+        }
+        .course-tag {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 0.9rem;
+            border-radius: 5px;
+        }
+        .logout-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            background-color: #ff4d4d;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: #e60000;
+        }
+        .profile-img {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Welcome, {{ lecturer.first_name }} {{ lecturer.last_name }}</h1>
+
+        {% if lecturer.profile_picture %}
+            <div class="profile-img">
+                <img src="{{ lecturer.profile_picture.url }}" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%;">
+            </div>
+        {% else %}
+            <p>No profile picture available</p>
+        {% endif %}
+
+        <div class="student-details">
+            <p class="detail-item">
+                <span>Department:</span> {{ lecturer.department }}
+            </p>
+
+            {% if lecturer.courses.all %}
+                <p class="detail-item">
+                    <span>Courses:</span>
+                    <ul>
+                        {% for course in lecturer.courses.all %}
+                            <li>{{ course.course_name }}</li>
+                        {% endfor %}
+                    </ul>
+                </p>
+            {% else %}
+                <p>No courses assigned</p>
+            {% endif %}
+        </div>
+
+        <a href="{% url 'logout' %}" class="logout-btn">Log Out</a>
+    </div>
+</body>
+</html>
