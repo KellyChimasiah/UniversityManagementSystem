@@ -1,0 +1,145 @@
+<!-- templates/make_payment.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Payment</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>/* static/css/style.css */
+
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            width: 50%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            margin-top: 50px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .paid {
+            color: green;
+            font-weight: bold;
+        }
+        
+        .unpaid {
+            color: red;
+            font-weight: bold;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 10px 5px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .pay-btn {
+            background-color: #28a745;
+        }
+        
+        .pay-btn:hover {
+            background-color: #218838;
+        }
+        
+        .cancel-btn {
+            background-color: #dc3545;
+        }
+        
+        .cancel-btn:hover {
+            background-color: #c82333;
+        }
+        
+        .back-btn {
+            background-color: #6c757d;
+        }
+        
+        .back-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 80%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Make Payment</h1>
+        <p><strong>Student:</strong> {{ fee.student.first_name }} {{ fee.student.last_name }}</p>
+        <p><strong>Fee Type:</strong> {{ fee.fee_type.name }}</p>
+        <p><strong>Amount Due:</strong> Ksh {{ fee.amount }}</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <label for="amount_paid">Enter Amount:</label>
+            <input type="number" name="amount_paid" id="amount_paid" required>
+            
+            <div class="btn-group">
+                <button type="submit" class="btn pay-btn">Confirm Payment</button>
+                <a href="{% url 'fee_list' %}" class="btn cancel-btn">Cancel Payment</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

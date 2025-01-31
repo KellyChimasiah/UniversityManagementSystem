@@ -1,0 +1,149 @@
+<!-- templates/fee_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee List</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>/* static/css/style.css */
+
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            width: 60%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            margin-top: 50px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .paid {
+            color: green;
+            font-weight: bold;
+        }
+        
+        .unpaid {
+            color: red;
+            font-weight: bold;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .pay-btn {
+            background-color: #28a745;
+        }
+        
+        .pay-btn:hover {
+            background-color: #218838;
+        }
+        
+        .detail-btn {
+            background-color: #17a2b8;
+        }
+        
+        .detail-btn:hover {
+            background-color: #138496;
+        }
+        
+        .back-btn {
+            background-color: #6c757d;
+        }
+        
+        .back-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fee List</h1>
+        <table>
+            <tr>
+                <th>Student</th>
+                <th>Fee Type</th>
+                <th>Amount</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            {% for fee in fees %}
+            <tr>
+                <td>{{ fee.student.first_name }} {{ fee.student.last_name }}</td>
+                <td>{{ fee.fee_type.name }}</td>
+                <td>Ksh {{ fee.amount }}</td>
+                <td>{{ fee.due_date }}</td>
+                <td class="{% if fee.paid %}paid{% else %}unpaid{% endif %}">
+                    {% if fee.paid %} Paid {% else %} Unpaid {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'fee_detail' fee.id %}" class="btn detail-btn">Fee Details</a>
+                    {% if not fee.paid %}
+                        <a href="{% url 'make_payment' fee.id %}" class="btn pay-btn">Pay Fee</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <!-- Buttons for Navigation -->
+        <div class="btn-group">
+            <a href="{% url 'student_dashboard' %}" class="btn back-btn">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>
